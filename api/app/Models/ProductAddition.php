@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Models;
+
+use App\Support\MediaLibrary\WithMedia;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\EloquentSortable\SortableTrait;
+use Spatie\MediaLibrary\HasMedia;
+
+class ProductAddition extends Model implements HasMedia
+{
+    use SortableTrait, WithMedia;
+
+    protected $fillable = ['title', 'images_title', 'description', 'other_description',
+        'order_column', 'is_active'];
+
+    public $sortable = [
+        'order_column_name' => 'order_column',
+        'sort_when_creating' => true,
+    ];
+
+    public function scopeIsActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+}
